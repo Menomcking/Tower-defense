@@ -7,6 +7,7 @@
 #endif
 #include "kirajzol.h"
 #include "nevadas.h"
+#include "kor_vege.h"
 
 /*
 void kor(int eletek, int pontszam, int elkoltheto_pontok, Torony *tornyok, Ellenfel *ellenfelek, int kori){
@@ -37,7 +38,7 @@ int main(void){
     int kori = 1;
     struct Ellenfel ellenfelek[5];
     struct Torony tornyok[8];
-    kirajzol(eletek, pontszam, elkoltheto_pontok, tornyok, ellenfelek, kori);
+    kor_vege(eletek, pontszam, elkoltheto_pontok, tornyok, ellenfelek, kori);
     free(nev);
     return 0;
 }

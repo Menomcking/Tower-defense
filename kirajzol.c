@@ -13,9 +13,7 @@ void kirajzol(int eletek, int pontszam, int elkoltheto_pontok, Torony *tornyok, 
     int legyozott_ellenfelek = 0;
     bool ellen_elfogyott = false;
     bool kor_vege_e = false;
-    if (legyozott_ellenfelek == 0)
-        kor_vege_e = false;
-    else if(legyozott_ellenfelek == 5)
+    if(legyozott_ellenfelek == 5)
         ellen_elfogyott = true;
     char lerakott_tornyok[8] = {'T', 'T', 'T', 'T', 'T', 'T', 'T', 'T'};
     int p_ellenfelek[9] = {0, 0, 0, 0, 0, 0, 0, 0, 0};
