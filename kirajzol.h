@@ -7,7 +7,7 @@
         int sebzes;
         int ar;
         int max_celpontok;
-        char icon[7];
+        char icon;
     }Torony;
-    void kirajzol(int eletek, int pontszam, int elkoltheto_pontok, Torony *tornyok, Ellenfel *ellenfelek, int kori);
+    void kirajzol(int eletek, int pontszam, int elkoltheto_pontok, Torony *tornyok, Ellenfel *ellenfelek, int kori, int kor_lepes);
 #endif

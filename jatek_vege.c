@@ -3,10 +3,6 @@
 #include "kor_vege.h"
 #include "jatek_vege.h"
 #include "temp_rst.h"
-typedef struct Adat {
-    char *nev;
-    int pont;
-}adat;
 // A játék végén beilleszti a megfelelő helyre a dicsőséglistába a játékos által elért pontszámot és a megadott nevet.
 void jatek_vege(int pontok, char *neve){
     FILE *fp;
@@ -16,7 +12,7 @@ void jatek_vege(int pontok, char *neve){
         perror("A fájl megnyitása sikertelen.");
         return;
     }else
-        prinf("A fájl sikeresen megnyitva.");
+        printf("A fájl sikeresen megnyitva.");
 
     adat tomb[10];
     adat temp = {" ", 0};
@@ -42,23 +38,24 @@ void jatek_vege(int pontok, char *neve){
         if(i == 9 && temp.pont > tomb[9].pont){
             tomb[9].nev = temp.nev;
             tomb[9].pont = temp.pont;
-            temp_rst(temp);
+            temp_rst(&temp);
         }else if(i == 9 && pontok > tomb[9].pont){
             tomb[9].nev = pontok;
             tomb[9].pont = pontok;
+            }
         }
-    }
-    //A fájl feltöltése adatokkal
-    fprintf(fp, tomb[0].nev);
-    fprintf(fp, "\n");
-    fprintf(fp, tomb[0].pont);
-    fclose(fp);
-    fp = fopen("discoseg_lista.txt", "a");
-    for(int i = 1; i < 10; i++){
-        fprintf(fp, tomb[i].nev);
+        //A fájl feltöltése adatokkal
+        fprintf(fp, tomb[0].nev);
         fprintf(fp, "\n");
-        fprintf(fp, tomb[i].pont);
-        fprintf(fp, "\n");
+        fprintf(fp, tomb[0].pont);
+        fclose(fp);
+        fp = fopen("discoseg_lista.txt", "a");
+        for(int i = 1; i < 10; i++){
+            fprintf(fp, tomb[i].nev);
+            fprintf(fp, "\n");
+            fprintf(fp, tomb[i].pont);
+            fprintf(fp, "\n");
+        }
+        fclose(fp);
     }
-    fclose(fp);
 }

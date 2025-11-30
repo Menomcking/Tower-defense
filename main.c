@@ -9,20 +9,6 @@
 #include "nevadas.h"
 #include "kor_vege.h"
 
-/*
-void kor(int eletek, int pontszam, int elkoltheto_pontok, Torony *tornyok, Ellenfel *ellenfelek, int kori){
-    if(eletek != 0){
-        kirajzol(eletek, pontszam, elkoltheto_pontok, tornyok, ellenfelek, kori);
-
-        kori++;
-    }
-    else{
-        printf("\nVége a körek");
-        kor_vege(eletek, pontszam, elkoltheto_pontok, tornyok, ellenfelek, kori);
-    }
-
-} */
-
 int main(void){
     #ifdef _WIN64
         SetConsoleCP(65001);
@@ -37,8 +23,15 @@ int main(void){
     int elkoltheto_pontok = 500;
     int kori = 1;
     struct Ellenfel ellenfelek[5];
-    struct Torony tornyok[8];
-    kor_vege(eletek, pontszam, elkoltheto_pontok, tornyok, ellenfelek, kori);
+    struct Torony tornyok[5];
+    for(int i = 0; i < 5; i++){
+        tornyok[i].ar = 0;
+        tornyok[i].hatotav = 0;
+        tornyok[i].ar = 0;
+        tornyok[i].sebzes = 0;
+        tornyok[i].icon = 'T';
+    }
+    kor_vege(eletek, pontszam, elkoltheto_pontok, tornyok, ellenfelek, kori, nev);
     free(nev);
     return 0;
 }
