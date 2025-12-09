@@ -4,11 +4,10 @@
 #include "kirajzol.h"
 #include "jatek_vege.h"
 #include "ellenfel_init.h"
-#include "kor.h"
 // Ha vége a körnek, akkor itt tud a felhasználó lerakni tornyokat, ha meg vége a játéknak, akkor itt lesz elmentve a játékos megszerzett pontszáma.
 void kor_vege(int eletek, int pontszam, int elkoltheto_pontok, Torony *tornyok, Ellenfel *ellenfelek, int kori, char *nev){
     struct Torony egy_celpontos = {3, 3, 250, 'E', 1};
-    struct Torony tobb_celpontos = {2, 2, 400, 'H', 3};
+    struct Torony tobb_celpontos = {2, 2, 400, 'Ö', 3};
     bool vesz_e = true; 
     char valasz;
     int legyozott_ellenfelek = 0;
@@ -23,9 +22,6 @@ void kor_vege(int eletek, int pontszam, int elkoltheto_pontok, Torony *tornyok, 
             printf("Adja meg a torony sorszámát, amit el szeretne helyezni.(Balról jobbra és fentről lentre kell számolni.)\n");
             int t_sorszam = 0;
             scanf("%d", &t_sorszam);
-            t_sorszam--;
-            if(t_sorszam < 0 || t_sorszam > 4)
-                printf("Hibás sorszám.\n");
             printf("Adja meg hány célpontos tornyot szeretne lerakni(1/3): %d\n", elkoltheto_pontok);
             int tipus = 0;
             scanf("%d", &tipus);
@@ -34,7 +30,7 @@ void kor_vege(int eletek, int pontszam, int elkoltheto_pontok, Torony *tornyok, 
                 vesz_e = false;
             }else if(tipus == 3){
                 tornyok[t_sorszam].ar = tobb_celpontos.ar;
-                tornyok[t_sorszam].icon = tobb_celpontos.icon;
+                tornyok[t_sorszam].icon = 'Ö';
                 tornyok[t_sorszam].hatotav = tobb_celpontos.hatotav;
                 tornyok[t_sorszam].sebzes = tobb_celpontos.sebzes;
                 tornyok[t_sorszam].max_celpontok = tobb_celpontos.max_celpontok;
@@ -42,7 +38,7 @@ void kor_vege(int eletek, int pontszam, int elkoltheto_pontok, Torony *tornyok, 
             }
             else if(tipus == 1){
                 tornyok[t_sorszam].ar = egy_celpontos.ar;
-                tornyok[t_sorszam].icon = egy_celpontos.icon;
+                tornyok[t_sorszam].icon = 'E';
                 tornyok[t_sorszam].hatotav = egy_celpontos.hatotav;
                 tornyok[t_sorszam].sebzes = egy_celpontos.sebzes;
                 tornyok[t_sorszam].max_celpontok = egy_celpontos.max_celpontok;

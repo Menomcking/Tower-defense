@@ -1,7 +1,5 @@
 #include <stdio.h>
 #include <stdbool.h>
-#include <string.h>
-#include <stdlib.h>
 #include "kor_vege.h"
 #include "jatek_vege.h"
 #include "temp_rst.h"
@@ -44,21 +42,20 @@ void jatek_vege(int pontok, char *neve){
             tomb[9].pont = temp.pont;
             temp_rst(&temp);
         }else if(i == 9 && pontok > tomb[9].pont){
-            tomb[9].nev = neve;
+            tomb[9].nev = pontok;
             tomb[9].pont = pontok;
             }
         }
         //A fájl feltöltése adatokkal
-        fprintf(fp, "%s", tomb[0].nev);
+        fprintf(fp, tomb[0].nev);
         fprintf(fp, "\n");
-        fprintf(fp, "%s", tomb[0].pont);
-        fprintf(fp, "\n");
+        fprintf(fp, tomb[0].pont);
         fclose(fp);
         fp = fopen("discoseg_lista.txt", "a");
         for(int i = 1; i < 10; i++){
-            fprintf(fp, "%s", tomb[i].nev);
+            fprintf(fp, tomb[i].nev);
             fprintf(fp, "\n");
-            fprintf(fp, "%s", tomb[i].pont);
+            fprintf(fp, tomb[i].pont);
             fprintf(fp, "\n");
         }
         fclose(fp);

@@ -28,6 +28,7 @@ int main(void){
     for(int i = 0; i < 5; i++){
         tornyok[i].ar = 0;
         tornyok[i].hatotav = 0;
+        tornyok[i].ar = 0;
         tornyok[i].sebzes = 0;
         tornyok[i].icon = 'T';
     }
