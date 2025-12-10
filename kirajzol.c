@@ -53,14 +53,15 @@ int kirajzol(int eletek, int pontszam, int elkoltheto_pontok, Torony *tornyok, E
         printf("\n");
         for(int x = 0; x < 9; x++){
             if(9 - y == 9 - x){
-                printf("%d", p_ellenfelek[ei]);
+                printf("%d", p_ellenfelek[y]);
                 ei++;
             }
             else if((y > 1 && y < 7) && ((y % 2 == 1  && x == y - 2) || (y % 2 == 0 && x == y + 2))){
-                if(tornyok[ti].ar == 0)
-                    printf("T");
-                else
+                int ti = (y - 2) / 2; 
+                if(ti >= 0 && ti < 5 && tornyok[ti].ar > 0)
                     printf("%c", tornyok[ti].icon);
+                else
+                    printf("T");
                 ti++;
             } 
             else

@@ -9,6 +9,7 @@
 void kor_vege(int eletek, int pontszam, int elkoltheto_pontok, Torony *tornyok, Ellenfel *ellenfelek, int kori, char *nev){
     struct Torony egy_celpontos = {3, 3, 250, 'E', 1};
     struct Torony tobb_celpontos = {2, 2, 400, 'H', 3};
+    ellenfel_init(0, ellenfelek);
     bool vesz_e = true; 
     char valasz;
     int legyozott_ellenfelek = 0;

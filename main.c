@@ -9,6 +9,7 @@
 #include "nevadas.h"
 #include "kor_vege.h"
 #include "debugmalloc.h"
+#include "ellenfel_init.h"
 
 int main(void){
     #ifdef _WIN64
@@ -24,6 +25,7 @@ int main(void){
     int elkoltheto_pontok = 500;
     int kori = 1;
     struct Ellenfel ellenfelek[5];
+    ellenfel_init(0, ellenfelek);
     struct Torony tornyok[5];
     for(int i = 0; i < 5; i++){
         tornyok[i].ar = 0;
