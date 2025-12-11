@@ -23,7 +23,7 @@ int main(void){
     int pontszam = 0;
     int eletek = 3;
     int elkoltheto_pontok = 500;
-    int kori = 1;
+    int kori = 0;
     struct Ellenfel ellenfelek[5];
     ellenfel_init(0, ellenfelek);
     struct Torony tornyok[5];

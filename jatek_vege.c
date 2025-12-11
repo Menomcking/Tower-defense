@@ -11,7 +11,7 @@
 void jatek_vege(int pontok, char *neve){
     FILE *fp;
     char *pontszam = NULL;
-    fp = fopen("dicsoseg_lista.txt", "w");
+    fp = fopen("dicsoseg_lista.txt", "r");
     if (fp == NULL){
         perror("A fájl megnyitása sikertelen.");
         return;

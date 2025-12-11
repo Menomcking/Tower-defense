@@ -7,8 +7,8 @@
 #include "kor.h"
 // Ha vége a körnek, akkor itt tud a felhasználó lerakni tornyokat, ha meg vége a játéknak, akkor itt lesz elmentve a játékos megszerzett pontszáma.
 void kor_vege(int eletek, int pontszam, int elkoltheto_pontok, Torony *tornyok, Ellenfel *ellenfelek, int kori, char *nev){
-    struct Torony egy_celpontos = {3, 3, 250, 'E', 1};
-    struct Torony tobb_celpontos = {2, 2, 400, 'H', 3};
+    struct Torony egy_celpontos = {3, 3, 250, 1, 'E'};
+    struct Torony tobb_celpontos = {3, 2, 400, 3, 'H'};
     ellenfel_init(0, ellenfelek);
     bool vesz_e = true; 
     char valasz;
@@ -20,7 +20,7 @@ void kor_vege(int eletek, int pontszam, int elkoltheto_pontok, Torony *tornyok, 
         scanf("%d", &elhelyez_e);
         if(elhelyez_e == 1)
         {
-            kirajzol(eletek, pontszam, elkoltheto_pontok, tornyok, ellenfelek, 0, -1, legyozott_ellenfelek);
+            kirajzol(eletek, pontszam, elkoltheto_pontok, tornyok, ellenfelek, kori, -1, legyozott_ellenfelek);
             printf("Adja meg a torony sorszámát, amit el szeretne helyezni.(Balról jobbra és fentről lentre kell számolni.)\n");
             int t_sorszam = 0;
             scanf("%d", &t_sorszam);
@@ -34,19 +34,11 @@ void kor_vege(int eletek, int pontszam, int elkoltheto_pontok, Torony *tornyok, 
                 printf("Nincs elegendő pontja ahoz hogy megvegye ezt a tornyot.");
                 vesz_e = false;
             }else if(tipus == 3){
-                tornyok[t_sorszam].ar = tobb_celpontos.ar;
-                tornyok[t_sorszam].icon = tobb_celpontos.icon;
-                tornyok[t_sorszam].hatotav = tobb_celpontos.hatotav;
-                tornyok[t_sorszam].sebzes = tobb_celpontos.sebzes;
-                tornyok[t_sorszam].max_celpontok = tobb_celpontos.max_celpontok;
+                tornyok[t_sorszam] = tobb_celpontos;
                 elkoltheto_pontok -= tobb_celpontos.ar;
             }
             else if(tipus == 1){
-                tornyok[t_sorszam].ar = egy_celpontos.ar;
-                tornyok[t_sorszam].icon = egy_celpontos.icon;
-                tornyok[t_sorszam].hatotav = egy_celpontos.hatotav;
-                tornyok[t_sorszam].sebzes = egy_celpontos.sebzes;
-                tornyok[t_sorszam].max_celpontok = egy_celpontos.max_celpontok;
+                tornyok[t_sorszam] = egy_celpontos;
                 elkoltheto_pontok -= egy_celpontos.ar;
             }
         }else{
@@ -54,12 +46,12 @@ void kor_vege(int eletek, int pontszam, int elkoltheto_pontok, Torony *tornyok, 
             printf("Nem vesz ebben a körben tornyokat.\n");
         }
     }
-    if(eletek > 1){
+    if((eletek) > 1){
         printf("Készen áll a következő körre?(igen: 1/nem: 0)\n");
         int kovi = 0;
         scanf("%d", &kovi);
         if(kovi == 1)
-            kor(eletek, pontszam, elkoltheto_pontok, tornyok, ellenfelek, kori + 1, 0, 0, nev);
+            kor(eletek, pontszam, elkoltheto_pontok, tornyok, ellenfelek, kori + 1, 0, legyozott_ellenfelek, nev);
         else
             printf("Vége a játéknak.\n");
             jatek_vege(pontszam, nev); 
