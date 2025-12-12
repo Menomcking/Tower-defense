@@ -15,6 +15,8 @@ void kor_vege(int eletek, int pontszam, int elkoltheto_pontok, Torony *tornyok, 
     int legyozott_ellenfelek = 0;
     //Itt mindent megpróbáltam hogy lehessen stringgel válaszolni a kérdésre és azt vizsgálja meg az if, de sehogy se volt hajlandó működni, ezért maradtam a számoknál.
     while(vesz_e){
+        if(eletek < 1)
+            vesz_e = false;
         printf("Most tud tornyokat elhelyezni. Szeretne tornyokat elhelyezni?(igen: 1/nem: 0)\n");
         int elhelyez_e = 0;
         scanf("%d", &elhelyez_e);
@@ -52,9 +54,10 @@ void kor_vege(int eletek, int pontszam, int elkoltheto_pontok, Torony *tornyok, 
         scanf("%d", &kovi);
         if(kovi == 1)
             kor(eletek, pontszam, elkoltheto_pontok, tornyok, ellenfelek, kori + 1, 0, legyozott_ellenfelek, nev);
-        else
+        else{
             printf("Vége a játéknak.\n");
             jatek_vege(pontszam, nev); 
+        }
     }else
         printf("Vége a játéknak.\n");
         jatek_vege(pontszam, nev);

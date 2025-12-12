@@ -7,60 +7,81 @@
 #include "temp_rst.h"
 #include "kirajzol.h"
 #include "ellenfel_init.h"
+#include "debugmalloc.h"
+#include "beilleszt.h"
 // A játék végén beilleszti a megfelelő helyre a dicsőséglistába a játékos által elért pontszámot és a megadott nevet.
 void jatek_vege(int pontok, char *neve){
-    FILE *fp;
-    char *pontszam = NULL;
-    fp = fopen("dicsoseg_lista.txt", "r");
-    if (fp == NULL){
-        perror("A fájl megnyitása sikertelen.");
-        return;
-    }else
-        printf("A fájl sikeresen megnyitva.");
+    FILE *fp = fopen("discoseg_lista.txt", "r");
+    adat *kezdo = NULL;
 
-    adat tomb[10];
-    adat temp = {" ", 0};
-    adat temp2 = {" ", 0};
-    for(int i = 0; i < 10; i++){
-        fgets(tomb[i].nev, strlen(neve), fp);
-        fgets(pontszam, __INT_MAX__, fp);
-        tomb[i].pont = atoi(pontszam);
-        if(pontok > tomb[i].pont && i != 9){
-            temp.nev = tomb[i].nev;
-            temp.pont = tomb[i].pont;
-            tomb[i].nev = neve;
-            tomb[i].pont = pontok;
-            pontok = 0;
-        }else if(temp.pont > tomb[i].pont && i != 9){
-            temp2.nev = temp.nev;
-            temp2.pont = temp.pont;
-            tomb[i].nev = temp.nev;
-            tomb[i].pont = temp.pont;
-            temp.nev = temp2.nev;
-            temp.pont = temp2.pont;
-            temp_rst(&temp2);
-        if(i == 9 && temp.pont > tomb[9].pont){
-            tomb[9].nev = temp.nev;
-            tomb[9].pont = temp.pont;
-            temp_rst(&temp);
-        }else if(i == 9 && pontok > tomb[9].pont){
-            tomb[9].nev = neve;
-            tomb[9].pont = pontok;
+    if(fp){
+        char nevbuffer[50];
+        char pontbuffer[10];
+
+        while (1) {
+            if(!fgets(nevbuffer, sizeof(nevbuffer), fp))
+                break;
+            
+            nevbuffer[strcspn(nevbuffer, "\r\n")] = '\0';
+
+            if(!fgets(pontbuffer, sizeof(pontbuffer), fp))
+                pontbuffer[0] = '\0';
+            
+            int pnt = atoi(pontbuffer);
+
+            adat *data = (adat*) malloc(sizeof(adat));
+            if(!data){
+                perror("Malloc nem sikerült");
+                break;
             }
-        }
-        //A fájl feltöltése adatokkal
-        fprintf(fp, "%s", tomb[0].nev);
-        fprintf(fp, "\n");
-        fprintf(fp, "%s", tomb[0].pont);
-        fprintf(fp, "\n");
-        fclose(fp);
-        fp = fopen("discoseg_lista.txt", "a");
-        for(int i = 1; i < 10; i++){
-            fprintf(fp, "%s", tomb[i].nev);
-            fprintf(fp, "\n");
-            fprintf(fp, "%s", tomb[i].pont);
-            fprintf(fp, "\n");
+            strncpy(data -> nev, nevbuffer, 49);
+            data -> nev[49] = '\0';
+            data -> pont = pnt;
+            data -> kov = NULL;
+            kezdo = beilleszt(kezdo, data);
         }
         fclose(fp);
+    }
+
+    adat *jatekos = (adat*) malloc(sizeof(adat));
+    if(!jatekos){
+        perror("Malloc nem sikerült");
+        adat *t = kezdo;
+        while(t){
+            adat *n = t -> kov;
+            free(t);
+            t = n;
+        }
+        return;
+    }
+    strncpy(jatekos -> nev, neve, 49);
+    jatekos -> nev[49] = '\0';
+    jatekos -> pont = pontok;
+    jatekos -> kov = NULL;
+    kezdo = beilleszt(kezdo, jatekos);
+
+    fp = fopen("discoseg_lista.txt", "w");
+    if(!fp){
+        perror("Nem sikerült megnyitni a fájlt az íráshoz.");
+        adat *t = kezdo;
+        while(t){
+            adat *n = t -> kov;
+            free(t);
+            t = n;
+        }
+        return;
+    }
+
+    for(adat *c = kezdo; c != NULL; c = c -> kov){
+        fprintf(fp, "%s\n", c -> nev);
+        fprintf(fp, "%d\n", c -> pont);
+    }
+    fclose(fp);
+
+    adat *t = kezdo;
+    while(t){
+        adat *n = t-> kov;
+        free(t);
+        t = n;
     }
 }

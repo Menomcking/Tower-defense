@@ -34,6 +34,5 @@ int main(void){
         tornyok[i].icon = 'T';
     }
     kor_vege(eletek, pontszam, elkoltheto_pontok, tornyok, ellenfelek, kori, nev);
-    free(nev);
     return 0;
 }
